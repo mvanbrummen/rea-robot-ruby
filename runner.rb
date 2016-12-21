@@ -5,6 +5,7 @@ require_relative "point"
 require_relative "table"
 
 PROMPT = "> "
+USAGE_STATEMENT = "Valid commands: PLACE x,y,(NORTH|EAST|SOUTH|WEST), MOVE, LEFT, RIGHT, REPORT, QUIT"
 
 @table = Table.new(Point.new(0, 0), Point.new(4, 4))
 @robot = Robot.new(@table)
@@ -14,10 +15,8 @@ def parse_command
   cmd = gets.chomp
   case cmd
   when /^PLACE \d+\,\d+\,(NORTH|EAST|SOUTH|WEST)$/
-    cmd.sub!("PLACE", "")
-    tokens = cmd.split(',')
-    puts "#{tokens[0]} #{tokens[1]} #{tokens[2]}"
-    @robot.place(tokens[0].to_i, tokens[1].to_i, parse_direction(tokens[2]))
+    tokens = cmd.sub!("PLACE", "").split(',')
+    @robot.place(tokens[0].to_i, tokens[1].to_i, tokens[2].downcase.to_sym)
   when "MOVE"
     @robot.move
   when "LEFT"
@@ -30,20 +29,7 @@ def parse_command
     $is_running = false
   else
     # whachu talkin 'bout Willis?
-    puts "Valid commands: PLACE x,y,(NORTH|EAST|SOUTH|WEST), MOVE, LEFT, RIGHT, REPORT, QUIT"
-  end
-end
-
-def parse_direction direction
-  case direction
-  when "NORTH"
-    return :north
-  when "EAST"
-    return :east
-  when "SOUTH"
-    return :south
-  when "WEST"
-    return :west
+    puts USAGE_STATEMENT
   end
 end
 
