@@ -1,10 +1,12 @@
+require_relative "point"
+
 class Robot
   attr_reader :position, :direction, :surface
 
-  def initialize(position, direction, surface)
-    @position = position
-    @direction = direction
+  def initialize(surface)
     @surface = surface
+    @position = nil
+    @direction = nil
   end
 
   def place(x, y, direction)
@@ -68,6 +70,6 @@ class Robot
   end
 
   def report
-    "#{@position},#{@direction}" if is_placed?
+    "#{@position},#{@direction.to_s.upcase}\n" if is_placed?
   end
 end

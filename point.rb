@@ -13,4 +13,9 @@ class Point
   def to_s
     "#{@x},#{@y}"
   end
+
+  def ==(other)
+    return false if other == nil
+    x == other.x && y == other.y
+  end
 end
