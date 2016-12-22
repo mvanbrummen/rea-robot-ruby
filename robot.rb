@@ -2,11 +2,13 @@ require_relative "point"
 
 class Robot
   attr_reader :position, :direction, :surface
+  RIGHT, LEFT = 1, -1
 
   def initialize(surface)
     @surface = surface
     @position = nil
     @direction = nil
+    @@directions = [:north, :east, :south, :west]
   end
 
   def place(x, y, direction)
@@ -39,37 +41,21 @@ class Robot
     end
   end
 
+  def report
+    "#{@position},#{@direction.to_s.upcase}\n" if is_placed?
+  end
+
   def rotate_left
-    if is_placed?
-      case @direction
-      when :north
-        @direction = :west
-      when :east
-        @direction = :north
-      when :south
-        @direction = :east
-      when :west
-        @direction = :south
-      end
-    end
+    rotate LEFT
   end
 
   def rotate_right
-    if is_placed?
-      case @direction
-      when :north
-        @direction = :east
-      when :east
-        @direction = :south
-      when :south
-        @direction = :west
-      when :west
-        @direction = :north
-      end
-    end
+    rotate RIGHT
   end
 
-  def report
-    "#{@position},#{@direction.to_s.upcase}\n" if is_placed?
+  private
+  def rotate index
+    i = @@directions.index(@direction)
+    @direction = @@directions[(i + index) % 4] if is_placed?
   end
 end

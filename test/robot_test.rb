@@ -8,6 +8,24 @@ class MockTable
 end
 
 class RobotTest < Test::Unit::TestCase
+  def test_rotate_right
+    robot = Robot.new(MockTable.new)
+    robot.place(0, 0, :north)
+    [:east, :south, :west, :north].each do |expect|
+      robot.rotate_right
+      assert_equal(expect, robot.direction)
+    end
+  end
+
+  def test_rotate_left
+    robot = Robot.new(MockTable.new)
+    robot.place(0, 0, :north)
+    [:west, :south, :east, :north].each do |expect|
+      robot.rotate_left
+      assert_equal(expect, robot.direction)
+    end
+  end
+
   def test_is_placed_false
     assert_equal(false, Robot.new(nil).is_placed?)
   end
