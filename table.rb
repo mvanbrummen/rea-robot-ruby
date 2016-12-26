@@ -1,5 +1,6 @@
 class Table
   def initialize(min_point, max_point)
+    raise ArgumentError, "Min point can't be more than max point" if min_point > max_point
     @min_point = min_point
     @max_point = max_point
   end

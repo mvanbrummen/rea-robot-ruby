@@ -2,7 +2,6 @@ require_relative "../point"
 require "test/unit"
 
 class TestPoint < Test::Unit::TestCase
-
   def test_translate
     assert_equal(Point.new(0, 1), Point.new(0, 0).translate(0, 1))
     assert_equal(Point.new(1, 0), Point.new(0, 0).translate(1, 0))
@@ -16,4 +15,16 @@ class TestPoint < Test::Unit::TestCase
     assert_equal("-1,-1", Point.new(-1, -1).to_s)
   end
 
+  def test_equals
+    assert(Point.new(0, 0) == Point.new(0, 0))
+    assert(Point.new(4, 4) == Point.new(4, 4))
+    assert(!(Point.new(4, 4) == Point.new(4, 1)))
+  end
+
+  def test_greater_than
+    assert(Point.new(0, 1) > Point.new(0, 0))
+    assert(Point.new(1, 0) > Point.new(0, 0))
+    assert(!(Point.new(0, 1) > Point.new(3, 1)))
+    assert(!(Point.new(1, 0) > Point.new(1, 3)))
+  end
 end

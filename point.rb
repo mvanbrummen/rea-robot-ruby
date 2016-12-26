@@ -15,7 +15,15 @@ class Point
   end
 
   def ==(other)
-    return false if other == nil
-    x == other.x && y == other.y
+    self.class == other.class && self.state == other.state
+  end
+
+  def >(other)
+    @x > other.x || @y > other.y
+  end
+
+  protected
+  def state
+    [@x, @y]
   end
 end
